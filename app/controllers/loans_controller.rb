@@ -2,7 +2,7 @@ class LoansController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @loans = current_user.loans.where(status: 'open')
+    @loans = current_user.loans
   end
 
   def new
@@ -25,12 +25,19 @@ class LoansController < ApplicationController
     if @loan.save
       redirect_to loans_path, notice: 'Loan requested successfully'
     else
+      flash[:alert] = 'Failed to request loan. Please check your input.'
       render :new
     end
   end
 
   def repay
     @loan = current_user.loans.find(params[:id])
+
+    # Ensure loan is open for repayment
+    if @loan.status != 'open'
+      return redirect_to loans_path, alert: 'This loan cannot be repaid yet.'
+    end
+
     total_due = @loan.total_amount_due.to_f
 
     if current_user.wallet.to_f >= total_due

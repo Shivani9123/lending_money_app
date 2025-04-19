@@ -1,2 +1,11 @@
-<h1>Admin::Loans#index</h1>
-<p>Find me in app/views/admin/loans/index.html.erb</p>
+<h1>Loan Requests</h1>
+
+<% @loans.each do |loan| %>
+  <p>
+    Loan Amount: <%= loan.amount %>, Interest Rate: <%= loan.interest_rate %>%, Status: <%= loan.status.capitalize %>
+    <% if loan.status == 'requested' %>
+      <%= link_to 'Approve', approve_admin_loan_path(loan), method: :post %> | 
+      <%= link_to 'Reject', reject_admin_loan_path(loan), method: :post %>
+    <% end %>
+  </p>
+<% end %>

@@ -1,29 +1,17 @@
 <h1>Request a Loan</h1>
 
-<%= form_with model: @loan, url: loans_path, method: :post do |form| %>
-  <% if @loan.errors.any? %>
-    <div class="errors">
-      <ul>
-        <% @loan.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+<%= form_with(model: @loan, local: true) do |form| %>
   <div class="field">
-    <%= form.label :amount, "Loan Amount" %>
-    <%= form.number_field :amount, step: 100, min: 1000, required: true %>
+    <%= form.label :amount %>
+    <%= form.number_field :amount, required: true %>
   </div>
 
   <div class="field">
-    <%= form.label :interest_rate, "Interest Rate (%)" %>
-    <%= form.number_field :interest_rate, step: 0.1, min: 0.1, required: true %>
+    <%= form.label :interest_rate %>
+    <%= form.number_field :interest_rate, required: true %>
   </div>
 
   <div class="actions">
-    <%= form.submit "Request Loan" %>
+    <%= form.submit 'Request Loan' %>
   </div>
 <% end %>
-
-<p><%= link_to 'Back to Loans', loans_path %></p>

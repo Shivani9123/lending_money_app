@@ -1,0 +1,6 @@
+<% if @loan.status == 'waiting_for_adjustment_acceptance' %>
+  <h3>Admin has adjusted the loan terms</h3>
+  <p>Amount: <%= @loan.amount %>, Interest Rate: <%= @loan.interest_rate %></p>
+  <%= button_to 'Accept Adjustment', loan_path(@loan, accept_adjustment: true), method: :put %>
+  <%= button_to 'Reject Adjustment', loan_path(@loan, accept_adjustment: false), method: :put %>
+<% end %>
