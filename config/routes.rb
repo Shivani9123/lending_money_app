@@ -6,7 +6,11 @@ Rails.application.routes.draw do
     resources :loans, only: [:index, :show, :edit, :update]
   end
 
-  resources :loans, only: [:new, :create, :index, :show]
+  resources :loans, only: [:new, :create, :index, :show] do
+    member do
+      post :repay
+    end
+  end
   
   root "loans#index"
   

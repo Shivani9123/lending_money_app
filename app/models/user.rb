@@ -6,7 +6,8 @@ class User < ApplicationRecord
   
   enum role: { user: 'user', admin: 'admin' }
   after_initialize :set_default_role, if: :new_record?
-  after_create :set_default_wallet_balance
+  before_create :set_default_wallet_balance
+  has_many :loans
        
   private
        
@@ -15,7 +16,6 @@ class User < ApplicationRecord
   end
 
   def set_default_wallet_balance
-    self.wallet ||= (role == 'admin' ? 1000000 : 10000)
-    save
+    self.wallet = (role == 'admin' ? 1_000_000 : 10_000)
   end
 end

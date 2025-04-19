@@ -1,0 +1,30 @@
+<h2>My Loans</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Amount</th>
+      <th>Interest Rate</th>
+      <th>Status</th>
+      <th>Interest Accrued</th>
+      <th>Total Due</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @loans.each do |loan| %>
+      <tr>
+        <td><%= loan.amount %></td>
+        <td><%= loan.interest_rate %>%</td>
+        <td><%= loan.status %></td>
+        <td><%= loan.interest_accrued.to_f.round(2) %></td>
+        <td><%= loan.total_amount_due.round(2) %></td>
+        <td>
+          <% if loan.status == "open" %>
+            <%= button_to "Repay", repay_loan_path(loan), method: :post, data: { confirm: "Are you sure?" } %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

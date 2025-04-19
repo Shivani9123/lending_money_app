@@ -7,16 +7,27 @@ class Admin::LoansController < ApplicationController
 
   def update
     @loan = Loan.find(params[:id])
-
+  
     case params[:status]
     when 'approved'
-      @loan.update(status: :approved)
+      ApplicationRecord.transaction do
+        admin = current_user
+        user = @loan.user
+        amount = @loan.amount.to_f
+  
+        raise "Admin has insufficient balance" if admin.wallet < amount
+  
+        admin.update!(wallet: admin.wallet - amount)
+        user.update!(wallet: user.wallet + amount)
+  
+        @loan.update!(status: :open, last_interest_applied_at: Time.current)
+      end
     when 'rejected'
       @loan.update(status: :rejected)
-    when 'adjusted'
-      # Handle adjustment logic
     end
-
-    redirect_to admin_loans_path
+  
+    redirect_to admin_loans_path, notice: "Loan updated successfully"
+  rescue => e
+    redirect_to admin_loans_path, alert: e.message
   end
 end
