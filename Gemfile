@@ -1,11 +1,13 @@
 source "https://rubygems.org"
 
 gem "devise"
-gem "sidekiq"
+gem 'sidekiq', '~> 7.0'
 gem "rails_admin"
+gem 'sidekiq-scheduler', '~> 5.0'
+gem 'redis'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 8.0.2"
+gem 'rails', '~> 7.1.3'
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
 # Use postgresql as the database for Active Record
@@ -65,3 +67,4 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+gem "cssbundling-rails"

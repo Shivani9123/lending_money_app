@@ -1,0 +1,10 @@
+:scheduler:
+  :schedule:
+    calculate_interest_job:
+      cron: "*/5 * * * *"
+      class: "CalculateInterestJob"
+      queue: default
+
+:concurrency: 5
+:queues:
+  - default
