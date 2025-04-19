@@ -10,13 +10,13 @@ class Admin::LoansController < ApplicationController
     @loan = Loan.find(params[:id])
 
     case params[:status]
-    when 'approved'
+    when "approved"
       approve_loan(@loan)
-    when 'rejected'
+    when "rejected"
       reject_loan(@loan)
-    when 'adjusted'
+    when "adjusted"
       adjust_loan(@loan)
-    when 'waiting_for_adjustment_acceptance'
+    when "waiting_for_adjustment_acceptance"
       handle_adjustment_acceptance(@loan)
     end
 
@@ -55,10 +55,10 @@ class Admin::LoansController < ApplicationController
 
   def handle_adjustment_acceptance(loan)
     # Handle user acceptance or rejection after admin adjustment
-    if params[:accept_adjustment] == 'true'
+    if params[:accept_adjustment] == "true"
       loan.update(status: :open, last_interest_applied_at: Time.current)
       flash[:notice] = "Adjustment accepted. Loan status updated to open."
-    elsif params[:accept_adjustment] == 'false'
+    elsif params[:accept_adjustment] == "false"
       loan.update(status: :rejected)
       flash[:notice] = "Adjustment rejected. Loan status updated to rejected."
     else

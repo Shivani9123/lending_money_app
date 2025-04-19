@@ -6,8 +6,8 @@ class LoansController < ApplicationController
   end
 
   def new
-    if current_user.loans.where(status: ['open', 'approved']).exists?
-      redirect_to loans_path, alert: 'You already have an open or approved loan.'
+    if current_user.loans.where(status: [ "open", "approved" ]).exists?
+      redirect_to loans_path, alert: "You already have an open or approved loan."
     else
       @loan = Loan.new
     end
@@ -18,14 +18,14 @@ class LoansController < ApplicationController
     @loan.status = :requested
 
     if @loan.amount > current_user.wallet
-      flash[:alert] = 'Insufficient funds to request this loan.'
+      flash[:alert] = "Insufficient funds to request this loan."
       render :new and return
     end
 
     if @loan.save
-      redirect_to loans_path, notice: 'Loan requested successfully'
+      redirect_to loans_path, notice: "Loan requested successfully"
     else
-      flash[:alert] = 'Failed to request loan. Please check your input.'
+      flash[:alert] = "Failed to request loan. Please check your input."
       render :new
     end
   end
@@ -34,8 +34,8 @@ class LoansController < ApplicationController
     @loan = current_user.loans.find(params[:id])
 
     # Ensure loan is open for repayment
-    if @loan.status != 'open'
-      return redirect_to loans_path, alert: 'This loan cannot be repaid yet.'
+    if @loan.status != "open"
+      return redirect_to loans_path, alert: "This loan cannot be repaid yet."
     end
 
     total_due = @loan.total_amount_due.to_f

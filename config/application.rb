@@ -26,12 +26,12 @@ module LendingMoneyApp
 
     Sidekiq.configure_server do |config|
       config.on(:startup) do
-        schedule_file = Rails.root.join('config/sidekiq.yml')
-    
+        schedule_file = Rails.root.join("config/sidekiq.yml")
+
         if File.exist?(schedule_file)
           schedule_data = YAML.load_file(schedule_file)
-          schedule = schedule_data[:schedule] || schedule_data['schedule']
-    
+          schedule = schedule_data[:schedule] || schedule_data["schedule"]
+
           if schedule.is_a?(Hash)
             Sidekiq::Scheduler.dynamic = true
             Sidekiq::Scheduler.load_schedule!(schedule)
@@ -42,6 +42,6 @@ module LendingMoneyApp
           Rails.logger.warn("Sidekiq schedule file not found at #{schedule_file}")
         end
       end
-    end                
+    end
   end
 end

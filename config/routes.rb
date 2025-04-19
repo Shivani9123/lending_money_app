@@ -1,19 +1,19 @@
 Rails.application.routes.draw do
-  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  mount RailsAdmin::Engine => "/admin", as: "rails_admin"
   devise_for :users
 
   namespace :admin do
-    resources :loans, only: [:index, :show, :edit, :update]
+    resources :loans, only: [ :index, :show, :edit, :update ]
   end
 
-  resources :loans, only: [:new, :create, :index, :show] do
+  resources :loans, only: [ :new, :create, :index, :show ] do
     member do
       post :repay
     end
   end
-  
+
   root "loans#index"
-  
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
