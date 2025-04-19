@@ -1,4 +1,14 @@
 Rails.application.routes.draw do
+  devise_for :users
+
+  namespace :admin do
+    resources :loans, only: [:index, :show, :edit, :update]
+  end
+
+  resources :loans, only: [:new, :create, :index, :show]
+  
+  root "loans#index"
+  
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
