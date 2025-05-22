@@ -3,7 +3,7 @@ source "https://rubygems.org"
 gem "devise"
 gem "sidekiq", "~> 7.0"
 gem "rails_admin"
-gem "sidekiq-scheduler", "~> 5.0"
+gem "sidekiq-scheduler", "~> 6.0"
 gem "redis"
 # gem "allow_browser"
 
